@@ -41,9 +41,6 @@
 * Database: 
     * Domain: 
         * Postgres
-        * Mongo
-    * Cache: 
-        * Redis
     * Search: 
         * Elasticsearch        
    
