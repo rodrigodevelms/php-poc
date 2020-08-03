@@ -1,0 +1,52 @@
+version: "3.7"
+services:
+    nginx:
+        image: nginx
+        hostname: nginx
+        container_name: nginx
+        volumes:
+            - ./nginx/conf/default.conf:/etc/nginx/conf.d/default.conf
+            - ./webapp/real-estate:/var/www
+        ports:
+            - 8055:80
+        restart: always
+        depends_on:
+            - php7
+            - postgres-php
+        networks:
+            - "php7-net"
+
+    php7:
+        build: ./php/conf
+        restart: always
+        hostname: php7
+        container_name: php7
+        volumes:
+            - ./php/conf/php.ini:/usr/local/etc/php/php.ini
+            - ./webapp/real-estate:/var/www
+        networks:
+            - "php7-net"
+        ports:
+            - "9000:9000"
+
+    postgres-php:
+        image: postgres:alpine
+        hostname: postgres-php
+        container_name: postgres-php
+        restart: always
+        environment:
+            POSTGRES_DB: real_estate
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+        ports:
+            - 5432:5432
+        volumes:
+            - ./postgres/psql:/var/lib/postgresql
+            - ./postgres/data:/var/lib/postgresql/data
+        networks:
+            - "php7-net"
+
+networks:
+    php7-net:
+        driver: bridge
+        name: php7-net

@@ -15,6 +15,8 @@
 
 ### Index
 
+[EXECUTION](#execution)
+
 [TECHNICAL REQUIREMENTS](#technical-requirements)
 
 [ARCHITECTURE](#architecture)
@@ -28,6 +30,25 @@
 <br> 
 
 ---
+
+### Execution
+
+* Move the docker folder to another path, outside the project.
+   * docker-compose up -d
+   
+ * About:
+   * PHP: 
+      * 7.4.0
+   * Nginx: 
+      * 3.0
+   * Postgres:  
+      * database name: &nbsp; `real_estate`
+      * login: &nbsp; `postgres`
+      * password: &nbsp; `postgres`
+
+<br>
+
+----
 
 ### Technical Requirements
 

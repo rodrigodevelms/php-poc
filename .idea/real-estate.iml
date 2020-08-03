@@ -10,6 +10,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src/Settings/src" isTestSource="false" packagePrefix="Settings\" />
       <sourceFolder url="file://$MODULE_DIR$/src/Company/src" isTestSource="false" packagePrefix="Company\" />
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/brick/math" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/brick/varexporter" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
