@@ -7,13 +7,14 @@
  * removing factory definitions; other dependency types may be overwritten
  * when regenerating this file via mezzio-tooling commands.
  */
-
+ 
 declare(strict_types=1);
 
 return [
-  'dependencies' => [
-    'factories' => [
-      \Access\Handler\AccessHandler::class=>\Access\Handler\AccessHandlerFactory::class,
+    'dependencies' => [
+        'factories' => [
+            Access\Handler\AccessHandler::class => Access\Handler\AccessHandlerFactory::class,
+            Company\Handler\CompanyHandler::class => Company\Handler\CompanyHandlerFactory::class,
+        ],
     ],
-  ],
 ];

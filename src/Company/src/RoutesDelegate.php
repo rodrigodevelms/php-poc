@@ -1,8 +1,10 @@
 <?php
 
-namespace Access;
 
-use Access\Handler\AccessHandler;
+namespace Company;
+
+
+use Company\Handler\CompanyHandler;
 use Psr\Container\ContainerInterface;
 
 class RoutesDelegate
@@ -10,8 +12,7 @@ class RoutesDelegate
   public function __invoke(ContainerInterface $container, $serviceName, callable $callback)
   {
     $app = $callback();
-    $app->get('/api/access', AccessHandler::class, 'access');
+    $app->get('/api/company', CompanyHandler::class, 'company');
     return $app;
   }
-
 }

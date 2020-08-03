@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Company;
 
+use Mezzio\Application;
+
 /**
  * The configuration provider for the Company module
  *
@@ -31,6 +33,11 @@ class ConfigProvider
   public function getDependencies(): array
   {
     return [
+      'delegators' => [
+        Application::class => [
+          RoutesDelegate::class,
+        ]
+      ],
       'invokables' => [
       ],
       'factories' => [

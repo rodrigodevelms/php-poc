@@ -19,6 +19,8 @@
 
 [ARCHITECTURE](#architecture)
 
+[DOMAINS](#domains)
+
 [FLOW](#flow)
 
 [COMMANDS](#commands)
@@ -27,7 +29,7 @@
 
 ---
 
-### Technical requirements
+### Technical Requirements
 
 * Language: 
     * Backend:
@@ -82,6 +84,12 @@
                     the required libraries. If in the future it is necessary include a new library, Composer will save to that directory.
                     
 <br> 
+
+---
+
+### Domains
+
+<br>
 
 ---
 
