@@ -4,7 +4,7 @@
 namespace Company;
 
 
-use Company\Handler\CompanyHandler;
+use Company\Handler\CreateCompanyHandler;
 use Psr\Container\ContainerInterface;
 
 class RoutesDelegate
@@ -12,7 +12,7 @@ class RoutesDelegate
   public function __invoke(ContainerInterface $container, $serviceName, callable $callback)
   {
     $app = $callback();
-    $app->get('/api/company', CompanyHandler::class, 'company');
+    $app->post('/api/company', CreateCompanyHandler::class, 'company_post');
     return $app;
   }
 }

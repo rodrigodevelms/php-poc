@@ -4,51 +4,59 @@
 namespace Company\Entity;
 
 
-use Patterns\Locale\LanguageEnum;
+use Patterns\Messages\LanguageEnum;
 use Ramsey\Uuid\Uuid;
-use function Settings\Validation\validateStringField;
-use function Validation\documentValidation;
-use function Validation\validateEnum;
+use Validation\DocumentValidation;
+use Validation\EnumValidation;
+use Validation\StringFieldValidation;
 
 class Company
 {
-  private Uuid $id;
-  private int $internalId;
-  private bool $active;
-  private string $companyName;
-  private string $fancyName;
-  private string $document;
-  private string $openingDate;
-  private string $legalNature; // LegalNatureEnum
-  private string $lineOfBusiness;
+  protected Uuid $id;
+  protected int $internalId;
+  protected bool $active;
+  protected string $companyName;
+  protected string $fancyName;
+  protected string $document;
+  protected string $openingDate;
+  protected string $legalNature; // LegalNatureEnum
+  protected string $lineOfBusiness;
+
+  protected StringFieldValidation $stringFieldValidation;
+  protected DocumentValidation $documentValidation;
+  protected EnumValidation $enumValidation;
 
   public function __construct(
-    bool $active,
-    string $companyName,
-    string $fancyName,
-    string $document,
-    string $legalNature,  // LegalNatureEnum
-    string $lineOfBusiness
+    StringFieldValidation $stringFieldValidation,
+    DocumentValidation $documentValidation,
+    EnumValidation $enumValidation
   )
   {
-    $this->active = $active;
-    $this->companyName = $companyName;
-    $this->fancyName = $fancyName;
-    $this->document = $document;
-    $this->legalNature = $legalNature;
-    $this->lineOfBusiness = $lineOfBusiness;
+    $this->stringFieldValidation = $stringFieldValidation;
+    $this->documentValidation = $documentValidation;
+    $this->enumValidation = $enumValidation;
   }
 
+  public function buildCompany(array $requestBody): array
+  {
+    $this->active = $requestBody['active'];
+    $this->companyName = $requestBody['companyName'];
+    $this->fancyName = $requestBody['fancyName'];
+    $this->document = $requestBody['document'];
+    $this->openingDate = $requestBody['openingDate'];
+    $this->legalNature = $requestBody['legalNature'];
+    $this->lineOfBusiness = $requestBody['lineOfBusiness'];
+  }
 
   public function validation(LanguageEnum $language): array
   {
     $result = [];
     array_push($result,
-      validateStringField($language, "company name", $this->companyName, 5, 120),
-      validateStringField($language, "fancy name", $this->fancyName, 5, 120),
-      documentValidation($language, $this->document),
-      validateEnum($language, $this->legalNature, new LegalNatureEnum()),
-      validateStringField($language, "line of business", $this->lineOfBusiness, 5, 120),
+      $this->stringFieldValidation->validate($language, "company name", $this->companyName, 5, 120),
+      $this->stringFieldValidation->validate($language, "fancy name", $this->fancyName, 5, 120),
+      $this->documentValidation->validate($language, $this->document),
+      $this->enumValidation->validate($language, $this->legalNature, new LegalNatureEnum()),
+      $this->stringFieldValidation->validate($language, "line of business", $this->lineOfBusiness, 5, 120),
     );
     return $result;
   }

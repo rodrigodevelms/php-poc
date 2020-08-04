@@ -14,7 +14,7 @@ return [
     'dependencies' => [
         'factories' => [
             Access\Handler\AccessHandler::class => Access\Handler\AccessHandlerFactory::class,
-            Company\Handler\CompanyHandler::class => Company\Handler\CompanyHandlerFactory::class,
+            Company\Handler\CreateCompanyHandler::class => Company\Handler\CreateCompanyHandlerFactory::class,
         ],
     ],
 ];
