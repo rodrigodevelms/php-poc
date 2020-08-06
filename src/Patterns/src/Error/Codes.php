@@ -9,7 +9,7 @@ class Codes
       return 1001;
     }
 
-    public function nullHeaderCode() : int {
+    public function wrongHeaderParameter() : int {
 //      log();
       return 1002;
     }

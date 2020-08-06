@@ -2,22 +2,21 @@
 
 namespace Validation;
 
-use Patterns\Messages\ValidationMessages;
-use function PHPUnit\Framework\isEmpty;
-use function PHPUnit\Framework\isNull;
+use Patterns\Messages\Validations\NotNullValidationMessage;
+use Patterns\Messages\Validations\StringLengthValidationMessage;
 
 class StringFieldValidation
 {
-  protected ValidationMessages $validationMessages;
-  protected string $language;
-  protected string $fieldName;
-  protected string $value;
-  protected int $minimumValue;
-  protected int $maximumValue;
+  protected NotNullValidationMessage $notNullMessage;
+  protected StringLengthValidationMessage $stringFieldMessage;
 
-  public function __construct(ValidationMessages $validationMessages)
+  public function __construct(
+    NotNullValidationMessage $notNullMessage,
+    StringLengthValidationMessage $stringFieldMessage
+  )
   {
-    $this->validationMessages = $validationMessages;
+    $this->notNullMessage = $notNullMessage;
+    $this->stringFieldMessage = $stringFieldMessage;
   }
 
   function validate(
@@ -25,13 +24,14 @@ class StringFieldValidation
     string $fieldName,
     string $value,
     int $minimumValue,
-    int $maximumValue): ?string
+    int $maximumValue
+  ): ?string
   {
     switch ($value) {
-      case (isNull($value) || isEmpty(trim($value))) :
-        return $this->validationMessages->notNull($language, $fieldName);
-      case (strlen($value) < $minimumValue || strlen($value) > $maximumValue) :
-        return $this->validationMessages->invalidStringLength($language, $fieldName, $minimumValue, $maximumValue);
+      case (empty($value) || strlen(trim($value)) == 0) :
+        return $this->notNullMessage->validate($language, $fieldName);
+      case ((strlen($value)) < $minimumValue || (strlen($value)) > $maximumValue) :
+        return $this->stringFieldMessage->validate($language, $fieldName, $minimumValue, $maximumValue);
       default:
         return null;
     }

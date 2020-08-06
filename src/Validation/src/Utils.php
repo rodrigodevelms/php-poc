@@ -1,6 +1,11 @@
 <?php
 
-function onlyNumbers(string $value): string
+namespace Validation;
+
+class Utils
 {
-  return preg_replace('/[^0-9]/is', '', $value);
+  function onlyNumbers(string $value): string
+  {
+    return preg_replace('/[^0-9]/is', '', $value);
+  }
 }

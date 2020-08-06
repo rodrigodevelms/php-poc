@@ -2,29 +2,28 @@
 
 namespace Validation;
 
-use Patterns\Messages\ValidationMessages;
+
+use Patterns\Messages\Validations\EnumValidationMessage;
 
 class EnumValidation
 {
-  protected ValidationMessages $validationMessages;
+  protected EnumValidationMessage $message;
 
-  public function __construct(ValidationMessages $validationMessages)
+  public function __construct(EnumValidationMessage $message)
   {
-    $this->validationMessages = $validationMessages;
-
+    $this->message = $message;
   }
 
   function validate(
     string $language,
     string $fieldValue,
-    object $classEnum
+    array $enumValues
   ): ?string
   {
-    $values = [];
-    foreach ($classEnum as $key => $value) {
-      $values[] = $value;
-      dir(var_dump($value));
+    $result = in_array($fieldValue, $enumValues);
+    if (!$result) {
+      return $this->message->validate($language, $fieldValue, $enumValues);
     }
-    return (in_array($fieldValue, $values)) ? null : $this->validationMessages->invalidEnum($language, $fieldValue, $values);
+    return null;
   }
 }

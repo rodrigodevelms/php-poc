@@ -2,17 +2,15 @@
 
 namespace Validation;
 
-use Patterns\Messages\ValidationMessages;
+use Patterns\Messages\Validations\DocumentValidationMessage;
 
 class DocumentValidation
 {
-  protected ValidationMessages $validationMessages;
-  protected string $language;
-  protected string $document;
+  protected DocumentValidationMessage $documentValidationMessage;
 
-  public function __construct(ValidationMessages $validationMessages)
+  public function __construct(DocumentValidationMessage $documentValidationMessage)
   {
-    $this->validationMessages = $validationMessages;
+    $this->documentValidationMessage = $documentValidationMessage;
   }
 
   function validate(
@@ -20,19 +18,21 @@ class DocumentValidation
     string $document
   ): ?string
   {
-    $document = onlyNumbers($document);
+    $utils = new Utils();
+    $document = $utils->onlyNumbers($this->$document);
 
     switch (strlen($document)) {
       case 11 :
-        return $this->validateCPF($document) ? null : $this->validationMessages->invalidDocument($language, "CPF");
+        return $this->validateCPF($document) ? null : $this->documentValidationMessage->validate($language, "CPF");
       case 14:
-        return $this->validateCNPJ($document) ? null : $this->validationMessages->invalidDocument($language, "CNPJ");
+        return $this->validateCNPJ($document) ? null : $this->documentValidationMessage->validate($language, "CNPJ");
       default :
-        return null;
+        return  $this->documentValidationMessage->validate($language, "Invalid Document");
     }
   }
 
-  protected function validateCPF(string $cpf): bool
+  protected
+  function validateCPF(string $cpf): bool
   {
     if (preg_match('/(\d)\1{10}/', $cpf)) {
       return false;
@@ -53,7 +53,8 @@ class DocumentValidation
     return true;
   }
 
-  private function validateCNPJ(string $cnpj): bool
+  private
+  function validateCNPJ(string $cnpj): bool
   {
     if (preg_match('/(\d)\1{13}/', $cnpj)) {
       return false;
