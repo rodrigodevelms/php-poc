@@ -7,7 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/Access/src" isTestSource="false" packagePrefix="Access\" />
-      <sourceFolder url="file://$MODULE_DIR$/src/Libs" isTestSource="false" packagePrefix="Libs\" />
+      <sourceFolder url="file://$MODULE_DIR$/Libs" isTestSource="false" packagePrefix="Libs\" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
       <excludeFolder url="file://$MODULE_DIR$/vendor" />

@@ -66,7 +66,7 @@
         "psr-4": {
             "Access\\": "src/Access/src/",
             "Company\\": "src/Company/src/",
-            "Libs\\": "src/Libs/",
+            "Libs\\": "Libs/",
             "Product\\": "src/Product/src/"
         }
     },
