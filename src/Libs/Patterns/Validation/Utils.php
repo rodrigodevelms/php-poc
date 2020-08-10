@@ -1,6 +1,6 @@
 <?php
 
-namespace Patterns\Validation;
+namespace Libs\Patterns\Validation;
 
 class Utils
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Patterns\Validation;
+namespace Libs\Patterns\Validation;
 
 use Exception;
-use Patterns\Error\Codes;
-use Patterns\Messages\Validations\RequestValidationMessage;
+use Libs\Patterns\Error\Codes;
+use Libs\Patterns\Messages\Validations\RequestValidationMessage;
 use Psr\Http\Message\ServerRequestInterface;
 
 class RequestValidation

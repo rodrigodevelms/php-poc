@@ -51,7 +51,7 @@
         "mezzio/mezzio-laminasrouter": "^3.0.1",
         "ramsey/uuid": "^4.1",
         "ext-spltype": "*",
-      "ext-json": "*"
+        "ext-json": "*"
     },
     "require-dev": {
         "filp/whoops": "^2.7.1",
@@ -66,7 +66,8 @@
         "psr-4": {
             "Access\\": "src/Access/src/",
             "Company\\": "src/Company/src/",
-            "Patterns\\": "src/Patterns/src/"
+            "Libs\\": "src/Libs/",
+            "Product\\": "src/Product/src/"
         }
     },
     "scripts": {

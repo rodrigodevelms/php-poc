@@ -1,8 +1,8 @@
 <?php
 
-namespace Patterns\Validation;
+namespace Libs\Patterns\Validation;
 
-use Patterns\Messages\Validations\EnumValidationMessage;
+use Libs\Patterns\Messages\Validations\EnumValidationMessage;
 
 class EnumValidation
 {

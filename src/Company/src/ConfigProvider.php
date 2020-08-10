@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Company;
 
-use Company\Handler\CreateCompanyHandler;
-use Company\Handler\CreateCompanyHandlerFactory;
+use Company\Handler\CompanyHandlerCreate;
+use Company\Handler\CompanyHandlerFactoryCreate;
+use Company\Handler\CompanyHandlerRead;
+use Company\Handler\CompanyHandlerFactoryRead;
 use Mezzio\Application;
 
 class ConfigProvider
@@ -29,7 +31,8 @@ class ConfigProvider
       'invokables' => [
       ],
       'factories' => [
-        CreateCompanyHandler::class => CreateCompanyHandlerFactory::class
+        CompanyHandlerCreate::class => CompanyHandlerFactoryCreate::class,
+        CompanyHandlerRead::class => CompanyHandlerFactoryRead::class
       ],
     ];
   }

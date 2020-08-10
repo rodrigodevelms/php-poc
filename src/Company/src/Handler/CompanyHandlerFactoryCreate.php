@@ -5,29 +5,28 @@ declare(strict_types=1);
 namespace Company\Handler;
 
 use Company\Entity\Company;
-use Laminas\Db\Adapter\Adapter;
 use Laminas\Db\Adapter\AdapterInterface;
-use Patterns\Error\Codes;
-use Patterns\Messages\Validations\DocumentValidationMessage;
-use Patterns\Messages\Validations\EnumValidationMessage;
-use Patterns\Messages\Validations\NotNullValidationMessage;
-use Patterns\Messages\Validations\StringLengthValidationMessage;
-use Patterns\Validation\DocumentValidation;
-use Patterns\Validation\EnumValidation;
-use Patterns\Validation\HeaderValidation;
-use Patterns\Validation\RequestValidation;
-use Patterns\Validation\StringFieldValidation;
-use Patterns\Validation\Utils;
+use Libs\Patterns\Error\Codes;
+use Libs\Patterns\Messages\Validations\DocumentValidationMessage;
+use Libs\Patterns\Messages\Validations\EnumValidationMessage;
+use Libs\Patterns\Messages\Validations\NotNullValidationMessage;
+use Libs\Patterns\Messages\Validations\StringLengthValidationMessage;
+use Libs\Patterns\Validation\DocumentValidation;
+use Libs\Patterns\Validation\EnumValidation;
+use Libs\Patterns\Validation\HeaderValidation;
+use Libs\Patterns\Validation\RequestValidation;
+use Libs\Patterns\Validation\StringFieldValidation;
+use Libs\Patterns\Validation\Utils;
 use Psr\Container\ContainerInterface;
 
-class CreateCompanyHandlerFactory
+class CompanyHandlerFactoryCreate
 {
-  public function __invoke(ContainerInterface $container): CreateCompanyHandler
+  public function __invoke(ContainerInterface $container): CompanyHandlerCreate
   {
     $adapter = $container->get(AdapterInterface::class);
     $codes = new Codes();
     $enumValidation = new EnumValidation(new EnumValidationMessage());
-    return new CreateCompanyHandler(
+    return new CompanyHandlerCreate(
       $codes,
       $adapter,
       new Company(

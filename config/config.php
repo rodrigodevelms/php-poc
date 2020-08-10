@@ -12,6 +12,7 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
+  \Product\ConfigProvider::class,
   \Laminas\Db\ConfigProvider::class,
   \Company\ConfigProvider::class,
   \Access\ConfigProvider::class,
@@ -31,7 +32,6 @@ $aggregator = new ConfigAggregator([
     : function () {
     return [];
   },
-
   new PhpFileProvider(realpath(__DIR__) . '/autoload/{{,*.}global,{,*.}local}.php'),
   // Load development config if it exists
   new PhpFileProvider(realpath(__DIR__) . '/development.config.php'),

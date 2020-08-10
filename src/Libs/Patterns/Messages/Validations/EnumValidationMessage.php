@@ -1,9 +1,9 @@
 <?php
 
 
-namespace Patterns\Messages\Validations;
+namespace Libs\Patterns\Messages\Validations;
 
-use Patterns\Locale\LanguageEnum;
+use Libs\Patterns\Locale\LanguageEnum;
 
 class EnumValidationMessage
 {

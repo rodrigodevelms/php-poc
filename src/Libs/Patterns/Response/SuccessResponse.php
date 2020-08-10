@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Patterns\Response;
+namespace Libs\Patterns\Response;
 
 
-use Patterns\Messages\Success\Success;
+use Libs\Patterns\Messages\Success\Success;
 use Ramsey\Uuid\Uuid;
 
 class SuccessResponse

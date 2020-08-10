@@ -1,6 +1,6 @@
 <?php
 
-namespace Patterns\Response;
+namespace Libs\Patterns\Response;
 
 use Ramsey\Uuid\Uuid;
 

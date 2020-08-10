@@ -1,6 +1,6 @@
 <?php
 
-namespace Patterns\Error;
+namespace Libs\Patterns\Error;
 
 class Codes
 {

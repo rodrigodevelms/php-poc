@@ -1,8 +1,8 @@
 <?php
 
-namespace Patterns\Validation;
+namespace Libs\Patterns\Validation;
 
-use Patterns\Messages\Validations\DocumentValidationMessage;
+use Libs\Patterns\Messages\Validations\DocumentValidationMessage;
 
 class DocumentValidation
 {

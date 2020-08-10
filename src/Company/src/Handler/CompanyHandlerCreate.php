@@ -12,15 +12,17 @@ use Laminas\Db\Adapter\Adapter;
 use Laminas\Db\Sql\TableIdentifier;
 use Laminas\Db\TableGateway\TableGateway;
 use Laminas\Diactoros\Response\JsonResponse;
-use Patterns\Error\Codes;
-use Patterns\Response\ErrorResponse;
-use Patterns\Validation\HeaderValidation;
-use Patterns\Validation\RequestValidation;
+use Libs\Patterns\Error\Codes;
+use Libs\Patterns\Response\ErrorResponse;
+use Libs\Patterns\Response\SuccessResponse;
+use Libs\Patterns\Validation\HeaderValidation;
+use Libs\Patterns\Validation\RequestValidation;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Ramsey\Uuid\Uuid;
 
-class CreateCompanyHandler implements RequestHandlerInterface
+class CompanyHandlerCreate implements RequestHandlerInterface
 {
   protected Codes $codes;
   protected Adapter $adapter;
@@ -50,22 +52,20 @@ class CreateCompanyHandler implements RequestHandlerInterface
       $header = $this->headerValidation->validate($request);
       $language = $header[0];
       $schema = $header[1];
-      $company = $requestValidate['Request']['Company'];
-      $this->company->buildCompanyFromJson($company);
+      $id = Uuid::uuid4();
+      $request = $requestValidate['Request']['Company'];
+      $this->company->buildCompanyFromJson($id, $request);
       $validate = $this->company->validation($language, new LegalNatureEnum(), new CompanyTypeEnum());
       if (!empty($validate)) {
         throw new Exception(implode(" ", $validate), $this->codes->validationCodeError());
       }
       $tableGateway = new TableGateway(new TableIdentifier('company', $schema), $this->adapter);
-      $content = $tableGateway->select();
-      $contentArray = [];
-      foreach ($content as $value) {
-        $contentArray[] = $value;
-      }
-      return new JsonResponse($contentArray, 200);
-    } catch (Exception $ex) {
-      $errorResult = new ErrorResponse($ex->getCode(), explode(". ", $ex->getMessage()));
-      return new JsonResponse($errorResult, 400);
+      $tableGateway->insert($this->company->getCompanyAsArray());
+      $result = new SuccessResponse($language);
+      return new JsonResponse($result, 202);
+    } catch (Exception $exception) {
+      $errorResult = new ErrorResponse($exception->getCode(), explode(". ", $exception->getMessage()));
+      return new JsonResponse($errorResult->errorMessages(), 400);
     }
   }
 }

@@ -1,14 +1,15 @@
 <?php
 
-namespace Patterns\Messages\Exceptions;
 
-use Patterns\Locale\LanguageEnum;
+namespace Libs\Patterns\Messages\Validations;
 
-class ExceptionRequest
+
+use Libs\Patterns\Locale\LanguageEnum;
+
+class RequestValidationMessage
 {
-  public function validate(
-    string $language
-  ): string
+
+  public function validate(string $language): string
   {
     switch ($language) {
       case LanguageEnum::USA :
