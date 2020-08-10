@@ -16,7 +16,7 @@ return [
             Access\Handler\AccessHandler::class => Access\Handler\AccessHandlerFactory::class,
             Company\Handler\CompanyHandlerCreate::class => Company\Handler\CompanyHandlerFactoryCreate::class,
             Company\Handler\CompanyHandlerRead::class => Company\Handler\CompanyHandlerFactoryRead::class,
-            Company\Handler\CompanyHandlerReadAll::class => Company\Handler\CompanyHandlerReadAllFactory::class,
+            Company\Handler\CompanyHandlerReadAll::class => Company\Handler\CompanyHandlerFactoryReadAll::class,
             Company\Handler\CompanyHandlerUpdate::class => Company\Handler\CompanyHandlerUpdateFactory::class,
         ],
     ],

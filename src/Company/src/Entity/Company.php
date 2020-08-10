@@ -68,9 +68,9 @@ class Company
   }
 
   public function copyCompany(
-    Company $company,
+    self $company,
     array $attributes
-  ): Company
+  ): self
   {
     $nc = new Company($this->enumValidation, $this->documentValidation, $this->stringFieldValidation);
     (array_key_exists('id', $attributes)) ? $nc->id = $attributes['id'] : $nc->id = $company->id;

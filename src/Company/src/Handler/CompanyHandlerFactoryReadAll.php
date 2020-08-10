@@ -11,7 +11,7 @@ use Libs\Patterns\Validation\EnumValidation;
 use Libs\Patterns\Validation\HeaderValidation;
 use Psr\Container\ContainerInterface;
 
-class CompanyHandlerReadAllFactory
+class CompanyHandlerFactoryReadAll
 {
   public function __invoke(ContainerInterface $container): CompanyHandlerReadAll
   {
