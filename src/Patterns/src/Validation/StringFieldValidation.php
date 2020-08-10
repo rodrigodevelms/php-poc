@@ -1,6 +1,6 @@
 <?php
 
-namespace Validation;
+namespace Patterns\Validation;
 
 use Patterns\Messages\Validations\NotNullValidationMessage;
 use Patterns\Messages\Validations\StringLengthValidationMessage;
@@ -27,10 +27,10 @@ class StringFieldValidation
     int $maximumValue
   ): ?string
   {
-    switch ($value) {
-      case (empty($value) || strlen(trim($value)) == 0) :
+    switch (strlen(trim($value))) {
+      case (0) :
         return $this->notNullMessage->validate($language, $fieldName);
-      case ((strlen($value)) < $minimumValue || (strlen($value)) > $maximumValue) :
+      case (strlen(trim($value)) < $minimumValue || strlen(trim($value)) > $maximumValue) :
         return $this->stringFieldMessage->validate($language, $fieldName, $minimumValue, $maximumValue);
       default:
         return null;

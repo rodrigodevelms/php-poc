@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Patterns\Messages\Validations;
-
 
 use Patterns\Locale\LanguageEnum;
 

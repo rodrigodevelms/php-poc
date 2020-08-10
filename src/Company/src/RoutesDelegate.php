@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Company;
-
 
 use Company\Handler\CreateCompanyHandler;
 use Psr\Container\ContainerInterface;

@@ -13,4 +13,8 @@ class Codes
 //      log();
       return 1002;
     }
+
+    public function validationCodeError() : int {
+      return 2000;
+    }
 }

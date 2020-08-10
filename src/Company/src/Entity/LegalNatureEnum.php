@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Company\Entity;
-
 
 class LegalNatureEnum
 {

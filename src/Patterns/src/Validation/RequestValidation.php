@@ -1,36 +1,32 @@
 <?php
 
-namespace Validation;
+namespace Patterns\Validation;
 
 use Exception;
 use Patterns\Error\Codes;
-use Patterns\Messages\Validations\EnumValidationMessage;
 use Patterns\Messages\Validations\RequestValidationMessage;
 use Psr\Http\Message\ServerRequestInterface;
 
 class RequestValidation
 {
-  public function validate(
-    ServerRequestInterface $request
-  ): ?array
+  protected Codes $codes;
+
+  public function __construct(Codes $codes)
   {
-    $codes = new Codes();
-    $headerValidation = new HeaderValidation(
-      new EnumValidation(
-        new EnumValidationMessage()
-      ),
-      $codes
-    );
+    $this->codes = $codes;
+  }
+
+  public function validate(ServerRequestInterface $request): ?array
+  {
     $requestBody = json_decode($request->getBody()->getContents(), true);
     $language = $request->getHeader('Language')[0];
-    $headerValidation->validate($request);
     if (empty($requestBody['Request'])) {
       $message = new RequestValidationMessage();
       throw new Exception(
         $message->validate($language),
-        $codes->nullRequestCode()
+        $this->codes->nullRequestCode()
       );
     }
-    return [$language, $requestBody];
+    return $requestBody;
   }
 }

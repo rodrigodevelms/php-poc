@@ -1,38 +1,38 @@
 <?php
 
-namespace Validation;
+namespace Patterns\Validation;
 
 use Patterns\Messages\Validations\DocumentValidationMessage;
 
 class DocumentValidation
 {
+  protected Utils $utils;
   protected DocumentValidationMessage $documentValidationMessage;
 
-  public function __construct(DocumentValidationMessage $documentValidationMessage)
+  public function __construct(
+    Utils $utils,
+    DocumentValidationMessage $documentValidationMessage
+  )
   {
+    $this->utils = $utils;
     $this->documentValidationMessage = $documentValidationMessage;
   }
 
-  function validate(
-    string $language,
-    string $document
-  ): ?string
-  {
-    $utils = new Utils();
-    $document = $utils->onlyNumbers($this->$document);
 
-    switch (strlen($document)) {
+  public function validate(string $language, string $value): ?string
+  {
+    $numbers = $this->utils->onlyNumbers($value);
+    switch (strlen($numbers)) {
       case 11 :
-        return $this->validateCPF($document) ? null : $this->documentValidationMessage->validate($language, "CPF");
+        return $this->validateCPF($numbers) ? null : $this->documentValidationMessage->validate($language, "CPF");
       case 14:
-        return $this->validateCNPJ($document) ? null : $this->documentValidationMessage->validate($language, "CNPJ");
+        return $this->validateCNPJ($numbers) ? null : $this->documentValidationMessage->validate($language, "CNPJ");
       default :
-        return  $this->documentValidationMessage->validate($language, "Invalid Document");
+        return $this->documentValidationMessage->validate($language, "Document");
     }
   }
 
-  protected
-  function validateCPF(string $cpf): bool
+  protected function validateCPF(string $cpf): bool
   {
     if (preg_match('/(\d)\1{10}/', $cpf)) {
       return false;
@@ -53,8 +53,7 @@ class DocumentValidation
     return true;
   }
 
-  private
-  function validateCNPJ(string $cnpj): bool
+  protected function validateCNPJ(string $cnpj): bool
   {
     if (preg_match('/(\d)\1{13}/', $cnpj)) {
       return false;

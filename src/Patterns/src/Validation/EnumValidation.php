@@ -1,7 +1,6 @@
 <?php
 
-namespace Validation;
-
+namespace Patterns\Validation;
 
 use Patterns\Messages\Validations\EnumValidationMessage;
 

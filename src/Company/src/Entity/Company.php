@@ -1,12 +1,11 @@
 <?php
 
-
 namespace Company\Entity;
 
-
+use Patterns\Validation\DocumentValidation;
+use Patterns\Validation\EnumValidation;
+use Patterns\Validation\StringFieldValidation;
 use Ramsey\Uuid\Uuid;
-use Validation\EnumValidation;
-use Validation\StringFieldValidation;
 
 class Company
 {
@@ -19,17 +18,21 @@ class Company
   protected string $openingDate;
   protected string $legalNature; // LegalNatureEnum
   protected string $lineOfBusiness;
+  protected string $companyType; //CompanyTypeEnum
 
-  protected StringFieldValidation $stringFieldValidation;
   protected EnumValidation $enumValidation;
+  protected DocumentValidation $documentValidation;
+  protected StringFieldValidation $stringFieldValidation;
 
   public function __construct(
-    StringFieldValidation $stringFieldValidation,
-    EnumValidation $enumValidation
+    EnumValidation $enumValidation,
+    DocumentValidation $documentValidation,
+    StringFieldValidation $stringFieldValidation
   )
   {
-    $this->stringFieldValidation = $stringFieldValidation;
     $this->enumValidation = $enumValidation;
+    $this->documentValidation = $documentValidation;
+    $this->stringFieldValidation = $stringFieldValidation;
   }
 
   public function buildCompanyFromJson(
@@ -43,18 +46,24 @@ class Company
     $this->openingDate = $requestBody['openingDate'];
     $this->legalNature = $requestBody['legalNature'];
     $this->lineOfBusiness = $requestBody['lineOfBusiness'];
+    $this->companyType = $requestBody['companyType'];
   }
 
-  public function validation(string $language, LegalNatureEnum $legalNatureEnum): array
+  public function validation(
+    string $language,
+    LegalNatureEnum $legalNatureEnum,
+    CompanyTypeEnum $companyTypeEnum
+  ): array
   {
     $result = [];
     array_push($result,
       $this->stringFieldValidation->validate($language, 'company name', $this->companyName, 5, 120),
       $this->stringFieldValidation->validate($language, 'fancy name', $this->fancyName, 5, 120),
-//      $documentValidation->validate($language, 'document'),
+      $this->documentValidation->validate($language, $this->document),
       $this->enumValidation->validate($language, $this->legalNature, $legalNatureEnum->values()),
-      $this->stringFieldValidation->validate($language, 'line of business', $this->lineOfBusiness, 5, 120)
+      $this->stringFieldValidation->validate($language, 'line of business', $this->lineOfBusiness, 5, 120),
+      $this->enumValidation->validate($language, $this->companyType, $companyTypeEnum->values())
     );
-    return $result;
+    return array_filter($result);
   }
 }

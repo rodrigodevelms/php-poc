@@ -16,9 +16,9 @@ class EnumValidationMessage
     $enums = implode(", ", $enums);
     switch ($language) {
       case LanguageEnum::USA :
-        return "The $fieldName value in Header Language does not correspond to any of the following possible options: { $enums }";
+        return "The $fieldName value, does not correspond to any of the following possible options: { $enums }";
       default :
-        return " O valor $fieldName no Header Language, não corresponde a nenhuma das seguintes possíveis opções: { $enums }";
+        return "O valor $fieldName, não corresponde a nenhuma das seguintes possíveis opções: { $enums }";
     }
   }
 }
