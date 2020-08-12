@@ -24,17 +24,14 @@ use Ramsey\Uuid\Uuid;
 
 class CompanyCreateHandler implements RequestHandlerInterface
 {
-  protected Codes $codes;
   protected Adapter $adapter;
   protected Company $company;
 
   public function __construct(
-    Codes $codes,
     Adapter $adapter,
     Company $company
   )
   {
-    $this->codes = $codes;
     $this->adapter = $adapter;
     $this->company = $company;
   }
@@ -54,7 +51,7 @@ class CompanyCreateHandler implements RequestHandlerInterface
         new CompanyTypeEnum()
       );
 
-      if (!empty($validate)) throw new Exception(implode(" ", $validate), $this->codes->validationCodeError());
+      if (!empty($validate)) throw new Exception(implode(" ", $validate), Codes::validationCodeError());
 
       $tableGateway = new TableGateway(new TableIdentifier('company', $schema), $this->adapter);
       $tableGateway->insert($this->company->getCompanyAsArray());

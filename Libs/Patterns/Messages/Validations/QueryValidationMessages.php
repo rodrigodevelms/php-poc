@@ -9,7 +9,7 @@ class QueryValidationMessages
   public static function selectNotFound(
     string $language,
     string $field
-  ) : string
+  ): string
   {
     switch ($language) {
       case LanguageEnum::USA :
