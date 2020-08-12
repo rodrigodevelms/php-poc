@@ -6,7 +6,7 @@ use Libs\Patterns\Locale\LanguageEnum;
 
 class ExceptionRequest
 {
-  public function validate(
+  public static function validate(
     string $language
   ): string
   {

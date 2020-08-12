@@ -1,13 +1,12 @@
 <?php
 
-
 namespace Libs\Patterns\Messages\Validations;
 
 use Libs\Patterns\Locale\LanguageEnum;
 
 class EnumValidationMessage
 {
-  public function validate(
+  public static function validate(
     string $language,
     string $fieldName,
     array $enums

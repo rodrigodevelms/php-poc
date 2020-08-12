@@ -9,14 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class RequestValidation
 {
-  protected Codes $codes;
-
-  public function __construct(Codes $codes)
-  {
-    $this->codes = $codes;
-  }
-
-  public function validate(ServerRequestInterface $request): ?array
+  public static function validate(ServerRequestInterface $request): ?array
   {
     $requestBody = json_decode($request->getBody()->getContents(), true);
     $language = $request->getHeader('Language')[0];
@@ -24,7 +17,7 @@ class RequestValidation
       $message = new RequestValidationMessage();
       throw new Exception(
         $message->validate($language),
-        $this->codes->nullRequestCode()
+        Codes::nullRequestCode()
       );
     }
     return $requestBody;

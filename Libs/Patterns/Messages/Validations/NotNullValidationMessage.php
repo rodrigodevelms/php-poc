@@ -1,14 +1,12 @@
 <?php
 
-
 namespace Libs\Patterns\Messages\Validations;
-
 
 use Libs\Patterns\Locale\LanguageEnum;
 
 class NotNullValidationMessage
 {
-  public function validate(
+  public static function validate(
     string $language,
     string $fieldName
   ): string

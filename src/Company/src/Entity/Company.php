@@ -20,21 +20,6 @@ class Company
   protected string $lineOfBusiness;
   protected string $companyType; //CompanyTypeEnum
 
-  protected EnumValidation $enumValidation;
-  protected DocumentValidation $documentValidation;
-  protected StringFieldValidation $stringFieldValidation;
-
-  public function __construct(
-    EnumValidation $enumValidation,
-    DocumentValidation $documentValidation,
-    StringFieldValidation $stringFieldValidation
-  )
-  {
-    $this->enumValidation = $enumValidation;
-    $this->documentValidation = $documentValidation;
-    $this->stringFieldValidation = $stringFieldValidation;
-  }
-
   public function buildCompanyFromJson(
     UuidInterface $id,
     array $requestBody
@@ -72,7 +57,7 @@ class Company
     array $attributes
   ): self
   {
-    $nc = new Company($this->enumValidation, $this->documentValidation, $this->stringFieldValidation);
+    $nc = new Company();
     (array_key_exists('id', $attributes)) ? $nc->id = $attributes['id'] : $nc->id = $company->id;
     (array_key_exists('active', $attributes)) ? $nc->active = $attributes['active'] : $nc->active = $company->active;
     (array_key_exists('company_name', $attributes)) ? $nc->companyName = $attributes['company_name'] : $nc->companyName = $company->companyName;
@@ -93,12 +78,12 @@ class Company
   {
     $result = [];
     array_push($result,
-      $this->stringFieldValidation->validate($language, 'company name', $this->companyName, 5, 120),
-      $this->stringFieldValidation->validate($language, 'fancy name', $this->fancyName, 5, 120),
-      $this->documentValidation->validate($language, $this->document),
-      $this->enumValidation->validate($language, $this->legalNature, $legalNatureEnum->values()),
-      $this->stringFieldValidation->validate($language, 'line of business', $this->lineOfBusiness, 5, 120),
-      $this->enumValidation->validate($language, $this->companyType, $companyTypeEnum->values())
+      StringFieldValidation::validate($language, 'company name', $this->companyName, 5, 120),
+      StringFieldValidation::validate($language, 'fancy name', $this->fancyName, 5, 120),
+      DocumentValidation::validate($language, $this->document),
+      EnumValidation::validate($language, $this->legalNature, $legalNatureEnum->values()),
+      StringFieldValidation::validate($language, 'line of business', $this->lineOfBusiness, 5, 120),
+      EnumValidation::validate($language, $this->companyType, $companyTypeEnum->values())
     );
     return array_filter($result);
   }

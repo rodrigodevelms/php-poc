@@ -2,9 +2,10 @@
 
 namespace Company;
 
-use Company\Handler\CompanyHandlerCreate;
-use Company\Handler\CompanyHandlerRead;
-use Company\Handler\CompanyHandlerReadAll;
+use Company\Handler\CompanyCreateHandler;
+use Company\Handler\CompanyReadAllHandler;
+use Company\Handler\CompanyReadHandler;
+use Company\Handler\CompanyUpdateHandler;
 use Psr\Container\ContainerInterface;
 
 class RoutesDelegate
@@ -12,9 +13,10 @@ class RoutesDelegate
   public function __invoke(ContainerInterface $container, $serviceName, callable $callback)
   {
     $app = $callback();
-    $app->post('/api/company', CompanyHandlerCreate::class, 'company_create');
-    $app->get('/api/company', CompanyHandlerReadAll::class, 'company_read_all');
-    $app->get('/api/company/:id_company', CompanyHandlerRead::class, 'company_read');
+    $app->post('/api/company', CompanyCreateHandler::class, 'company_create');
+    $app->get('/api/company', CompanyReadAllHandler::class, 'company_read_all');
+    $app->get('/api/company/:company_id', CompanyReadHandler::class, 'company_read');
+    $app->put('/api/company/:company_id', CompanyUpdateHandler::class, 'company_update');
     return $app;
   }
 }

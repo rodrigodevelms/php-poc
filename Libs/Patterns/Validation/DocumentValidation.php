@@ -3,40 +3,29 @@
 namespace Libs\Patterns\Validation;
 
 use Libs\Patterns\Messages\Validations\DocumentValidationMessage;
+use Libs\Patterns\Utils\StringUtils;
 
 class DocumentValidation
 {
-  protected Utils $utils;
-  protected DocumentValidationMessage $documentValidationMessage;
-
-  public function __construct(
-    Utils $utils,
-    DocumentValidationMessage $documentValidationMessage
-  )
+  public static function validate(
+    string $language,
+    string $value
+  ): ?string
   {
-    $this->utils = $utils;
-    $this->documentValidationMessage = $documentValidationMessage;
-  }
-
-
-  public function validate(string $language, string $value): ?string
-  {
-    $numbers = $this->utils->onlyNumbers($value);
+    $numbers = StringUtils::onlyNumbers($value);
     switch (strlen($numbers)) {
       case 11 :
-        return $this->validateCPF($numbers) ? null : $this->documentValidationMessage->validate($language, "CPF");
+        return self::validateCPF($numbers) ? null : DocumentValidationMessage::validate($language, "CPF");
       case 14:
-        return $this->validateCNPJ($numbers) ? null : $this->documentValidationMessage->validate($language, "CNPJ");
+        return self::validateCNPJ($numbers) ? null : DocumentValidationMessage::validate($language, "CNPJ");
       default :
-        return $this->documentValidationMessage->validate($language, "Document");
+        return DocumentValidationMessage::validate($language, "Document");
     }
   }
 
-  protected function validateCPF(string $cpf): bool
+  private static function validateCPF(string $cpf): bool
   {
-    if (preg_match('/(\d)\1{10}/', $cpf)) {
-      return false;
-    }
+    if (preg_match('/(\d)\1{10}/', $cpf)) return false;
 
     for ($t = 9; $t < 11; $t++) {
 
@@ -46,18 +35,14 @@ class DocumentValidation
 
       $d = ((10 * $d) % 11) % 10;
 
-      if ($cpf[$c] != $d) {
-        return false;
-      }
+      if ($cpf[$c] != $d) return false;
     }
     return true;
   }
 
-  protected function validateCNPJ(string $cnpj): bool
+  private static function validateCNPJ(string $cnpj): bool
   {
-    if (preg_match('/(\d)\1{13}/', $cnpj)) {
-      return false;
-    }
+    if (preg_match('/(\d)\1{13}/', $cnpj)) return false;
 
     for ($i = 0, $j = 5, $sum = 0; $i < 12; $i++) {
       $sum += $cnpj[$i] * $j;
@@ -66,9 +51,7 @@ class DocumentValidation
 
     $rest = $sum % 11;
 
-    if ($cnpj[12] != ($rest < 2 ? 0 : 11 - $rest)) {
-      return false;
-    }
+    if ($cnpj[12] != ($rest < 2 ? 0 : 11 - $rest)) return false;
 
     for ($i = 0, $j = 6, $sum = 0; $i < 13; $i++) {
       $sum += $cnpj[$i] * $j;

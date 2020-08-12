@@ -9,6 +9,6 @@ class LanguageEnum
 
   public function values(): array
   {
-    return [ self::BR, self::USA];
+    return [self::BR, self::USA];
   }
 }

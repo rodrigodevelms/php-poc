@@ -1,28 +1,18 @@
 <?php
 
-
 namespace Libs\Patterns\Response;
-
 
 use Libs\Patterns\Messages\Success\Success;
 use Ramsey\Uuid\Uuid;
 
 class SuccessResponse
 {
-  protected string $language;
-
-  public function __construct(string $language)
+  public static function messages(string $language): array
   {
-    $this->language = $language;
-  }
-
-  public function messages(): array
-  {
-    $message = new Success();
     return [
       'id' => Uuid::uuid4(),
       'date' => date("Y/m/d"),
-      'success' => $message->validate($this->language)
+      'success' => Success::validate($language)
     ];
   }
 }

@@ -10,27 +10,21 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class HeaderValidation
 {
-  protected EnumValidation $enumValidation;
-  protected Codes $codes;
-
-  public function __construct(EnumValidation $enumValidation, Codes $codes)
+  public static function validate(ServerRequestInterface $request)
   {
-    $this->enumValidation = $enumValidation;
-    $this->codes = $codes;
-  }
-
-  public function validate(ServerRequestInterface $request)
-  {
-    $languageValidate = $this->languageValidate($request, new LanguageEnum());
-    $schemaValidate = $this->schemaValidate($request);
+    $languageValidate = self::languageValidate($request, new LanguageEnum());
+    $schemaValidate = self::schemaValidate($request);
 
     return [$languageValidate, $schemaValidate];
   }
 
-  private function languageValidate(ServerRequestInterface $request, LanguageEnum $languageEnum): ?string
+  private static function languageValidate(
+    ServerRequestInterface $request,
+    LanguageEnum $languageEnum
+  ): ?string
   {
     $header = $request->getHeader('Language')[0];
-    if (!empty($this->enumValidation->validate(LanguageEnum::BR, $header, $languageEnum->values()))) {
+    if (!empty(EnumValidation::validate(LanguageEnum::BR, $header, $languageEnum->values()))) {
       $message = new EnumValidationMessage();
       $enums = new  LanguageEnum();
       $result = $message->validate(
@@ -40,13 +34,13 @@ class HeaderValidation
       );
       throw new Exception(
         $result,
-        $this->codes->wrongHeaderParameter()
+        Codes::wrongHeaderParameter()
       );
     }
     return $header;
   }
 
-  private function schemaValidate(ServerRequestInterface $request): ?string
+  private static function schemaValidate(ServerRequestInterface $request): ?string
   {
     return $request->getHeader('Schema')[0];
   }

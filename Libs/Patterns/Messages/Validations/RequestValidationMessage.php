@@ -1,15 +1,12 @@
 <?php
 
-
 namespace Libs\Patterns\Messages\Validations;
-
 
 use Libs\Patterns\Locale\LanguageEnum;
 
 class RequestValidationMessage
 {
-
-  public function validate(string $language): string
+  public static function validate(string $language): string
   {
     switch ($language) {
       case LanguageEnum::USA :

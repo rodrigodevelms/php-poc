@@ -4,17 +4,30 @@ namespace Libs\Patterns\Error;
 
 class Codes
 {
-    public function nullRequestCode() : int {
+  public static function nullRequestCode(): int
+  {
 //      log();
-      return 1001;
-    }
+    return 400;
+  }
 
-    public function wrongHeaderParameter() : int {
+  public static function wrongHeaderParameter(): int
+  {
 //      log();
-      return 1002;
-    }
+    return 400;
+  }
 
-    public function validationCodeError() : int {
-      return 2000;
-    }
+  public static function validationCodeError(): int
+  {
+    return 400;
+  }
+
+  public static function querySelectNotFound(): int
+  {
+    return 404;
+  }
+
+  public static function queryUpdateNotFound(): int
+  {
+    return 404;
+  }
 }

@@ -1,15 +1,12 @@
 <?php
 
-
 namespace Libs\Patterns\Messages\Validations;
-
 
 use Libs\Patterns\Locale\LanguageEnum;
 
 class StringLengthValidationMessage
 {
-
-  public function validate(
+  public static function validate(
     string $language,
     string $fieldName = null,
     int $minimumValue = null,

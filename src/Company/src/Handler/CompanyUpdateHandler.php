@@ -16,56 +16,60 @@ use Libs\Patterns\Error\Codes;
 use Libs\Patterns\Response\ErrorResponse;
 use Libs\Patterns\Response\SuccessResponse;
 use Libs\Patterns\Validation\HeaderValidation;
+use Libs\Patterns\Validation\IntegerQueryValidation;
 use Libs\Patterns\Validation\RequestValidation;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Ramsey\Uuid\Uuid;
 
-class CompanyHandlerCreate implements RequestHandlerInterface
+class CompanyUpdateHandler implements RequestHandlerInterface
 {
   protected Codes $codes;
   protected Adapter $adapter;
   protected Company $company;
-  protected HeaderValidation $headerValidation;
-  protected RequestValidation $requestValidation;
 
   public function __construct(
     Codes $codes,
     Adapter $adapter,
-    Company $company,
-    HeaderValidation $headerValidation,
-    RequestValidation $requestValidation
+    Company $company
   )
   {
     $this->codes = $codes;
     $this->adapter = $adapter;
     $this->company = $company;
-    $this->headerValidation = $headerValidation;
-    $this->requestValidation = $requestValidation;
   }
 
   public function handle(ServerRequestInterface $request): ResponseInterface
   {
     try {
-      $requestValidate = $this->requestValidation->validate($request);
-      $header = $this->headerValidation->validate($request);
+      $requestValidate = RequestValidation::validate($request);
+      $header = HeaderValidation::validate($request);
       $language = $header[0];
       $schema = $header[1];
-      $id = Uuid::uuid4();
-      $request = $requestValidate['Request']['Company'];
-      $this->company->buildCompanyFromJson($id, $request);
-      $validate = $this->company->validation($language, new LegalNatureEnum(), new CompanyTypeEnum());
-      if (!empty($validate)) {
-        throw new Exception(implode(" ", $validate), $this->codes->validationCodeError());
-      }
+      $id = $request->getAttribute('company_id');
+      $this->company->buildCompanyFromJson(
+        Uuid::fromString($id),
+        $requestValidate['Request']['Company']
+      );
+      $validate = $this->company->validation(
+        $language,
+        new LegalNatureEnum(),
+        new CompanyTypeEnum()
+      );
+
+      if (!empty($validate)) throw new Exception(implode(' ', $validate), $this->codes->validationCodeError());
+
       $tableGateway = new TableGateway(new TableIdentifier('company', $schema), $this->adapter);
-      $tableGateway->insert($this->company->getCompanyAsArray());
-      $result = new SuccessResponse($language);
-      return new JsonResponse($result, 202);
+      $query = $tableGateway->update($this->company->getCompanyAsArray(), ['id' => $id]);
+      IntegerQueryValidation::validate($query, $language);
+
+      return new JsonResponse(SuccessResponse::messages($language), 204);
+
     } catch (Exception $exception) {
-      $errorResult = new ErrorResponse($exception->getCode(), explode(". ", $exception->getMessage()));
-      return new JsonResponse($errorResult->errorMessages(), 400);
+      $errorResult = ErrorResponse::errorMessages($exception->getCode(), explode(". ", $exception->getMessage()));
+      $code = $exception->getCode() == 0 ? 400 : $exception->getCode();
+      return new JsonResponse($errorResult, $code);
     }
   }
 }

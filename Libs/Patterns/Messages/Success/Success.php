@@ -1,14 +1,12 @@
 <?php
 
-
 namespace Libs\Patterns\Messages\Success;
-
 
 use Libs\Patterns\Locale\LanguageEnum;
 
 class Success
 {
-  public function validate(string $language): string
+  public static function validate(string $language): string
   {
     switch ($language) {
       case LanguageEnum::USA :

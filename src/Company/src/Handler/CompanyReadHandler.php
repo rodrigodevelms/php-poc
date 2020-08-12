@@ -11,35 +11,39 @@ use Laminas\Db\TableGateway\TableGateway;
 use Laminas\Diactoros\Response\JsonResponse;
 use Libs\Patterns\Response\ErrorResponse;
 use Libs\Patterns\Validation\HeaderValidation;
+use Libs\Patterns\Validation\ObjectQueryValidation;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class CompanyHandlerReadAll implements RequestHandlerInterface
+class CompanyReadHandler implements RequestHandlerInterface
 {
   protected Adapter $adapter;
-  protected HeaderValidation $headerValidation;
 
   public function __construct(
-    Adapter $adapter,
-    HeaderValidation $headerValidation
+    Adapter $adapter
   )
   {
     $this->adapter = $adapter;
-    $this->headerValidation = $headerValidation;
   }
 
   public function handle(ServerRequestInterface $request): ResponseInterface
   {
     try {
-      $header = $this->headerValidation->validate($request);
+      $header = HeaderValidation::validate($request);
+      $id = $request->getAttribute('company_id');
+      $language = $header[0];
       $schema = $header[1];
       $tableGateway = new TableGateway(new TableIdentifier('company', $schema), $this->adapter);
-      $result = $tableGateway->select();
+      $result = $tableGateway->select(['id' => $id]);
+      ObjectQueryValidation::validate($result, $language, "Id");
+
       return new JsonResponse($result->toArray(), 200);
+
     } catch (Exception $exception) {
-      $errorResult = new ErrorResponse($exception->getCode(), explode(". ", $exception->getMessage()));
-      return new JsonResponse($errorResult->errorMessages(), 400);
+      $errorResult = ErrorResponse::errorMessages($exception->getCode(), explode(". ", $exception->getMessage()));
+      $code = $exception->getCode() == 0 ? 400 : $exception->getCode();
+      return new JsonResponse($errorResult, $code);
     }
   }
 }

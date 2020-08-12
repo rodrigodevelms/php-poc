@@ -6,7 +6,7 @@ use Libs\Patterns\Locale\LanguageEnum;
 
 class DocumentValidationMessage
 {
-  public function validate(
+  public static function validate(
     string $language,
     string $fieldName
   ): string
