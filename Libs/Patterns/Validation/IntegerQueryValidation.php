@@ -1,10 +1,10 @@
 <?php
 
-namespace Libs\Patterns\Validation;
+namespace Patterns\Validation;
 
 use Exception;
-use Libs\Patterns\Error\Codes;
-use Libs\Patterns\Messages\Validations\QueryValidationMessages;
+use Patterns\Messages\Validations\QueryValidationMessages;
+use Patterns\Error\Codes;
 
 class IntegerQueryValidation
 {

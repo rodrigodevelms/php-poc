@@ -2,9 +2,9 @@
 
 namespace Company\Entity;
 
-use Libs\Patterns\Validation\DocumentValidation;
-use Libs\Patterns\Validation\EnumValidation;
-use Libs\Patterns\Validation\StringFieldValidation;
+use Patterns\Validation\DocumentValidation;
+use Patterns\Validation\EnumValidation;
+use Patterns\Validation\StringFieldValidation;
 use Ramsey\Uuid\UuidInterface;
 
 class Company

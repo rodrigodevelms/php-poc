@@ -1,6 +1,6 @@
 <?php
 
-namespace Libs\Patterns\Utils;
+namespace Patterns\Utils;
 
 class StringUtils
 {

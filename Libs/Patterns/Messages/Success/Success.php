@@ -1,8 +1,8 @@
 <?php
 
-namespace Libs\Patterns\Messages\Success;
+namespace Patterns\Messages\Success;
 
-use Libs\Patterns\Locale\LanguageEnum;
+use Patterns\Locale\LanguageEnum;
 
 class Success
 {

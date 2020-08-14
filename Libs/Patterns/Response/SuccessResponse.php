@@ -1,8 +1,8 @@
 <?php
 
-namespace Libs\Patterns\Response;
+namespace Patterns\Response;
 
-use Libs\Patterns\Messages\Success\Success;
+use Patterns\Messages\Success\Success;
 use Ramsey\Uuid\Uuid;
 
 class SuccessResponse

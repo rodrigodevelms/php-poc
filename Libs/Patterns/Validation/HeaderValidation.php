@@ -1,11 +1,11 @@
 <?php
 
-namespace Libs\Patterns\Validation;
+namespace Patterns\Validation;
 
 use Exception;
-use Libs\Patterns\Error\Codes;
-use Libs\Patterns\Locale\LanguageEnum;
-use Libs\Patterns\Messages\Validations\EnumValidationMessage;
+use Patterns\Locale\LanguageEnum;
+use Patterns\Messages\Validations\EnumValidationMessage;
+use Patterns\Error\Codes;
 use Psr\Http\Message\ServerRequestInterface;
 
 class HeaderValidation

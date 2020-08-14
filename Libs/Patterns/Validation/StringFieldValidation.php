@@ -1,9 +1,9 @@
 <?php
 
-namespace Libs\Patterns\Validation;
+namespace Patterns\Validation;
 
-use Libs\Patterns\Messages\Validations\NotNullValidationMessage;
-use Libs\Patterns\Messages\Validations\StringLengthValidationMessage;
+use Patterns\Messages\Validations\NotNullValidationMessage;
+use Patterns\Messages\Validations\StringLengthValidationMessage;
 
 class StringFieldValidation
 {

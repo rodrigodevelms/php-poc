@@ -1,6 +1,6 @@
 <?php
 
-namespace Libs\Patterns\Locale;
+namespace Patterns\Locale;
 
 class LanguageEnum
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Libs\Patterns\Messages\Validations;
+namespace Patterns\Messages\Validations;
 
-use Libs\Patterns\Locale\LanguageEnum;
+use Patterns\Locale\LanguageEnum;
 
 class DocumentValidationMessage
 {

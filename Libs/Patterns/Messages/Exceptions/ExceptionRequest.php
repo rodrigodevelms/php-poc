@@ -1,8 +1,8 @@
 <?php
 
-namespace Libs\Patterns\Messages\Exceptions;
+namespace Patterns\Messages\Exceptions;
 
-use Libs\Patterns\Locale\LanguageEnum;
+use Patterns\Locale\LanguageEnum;
 
 class ExceptionRequest
 {

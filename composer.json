@@ -66,8 +66,13 @@
     "psr-4": {
       "Access\\": "src/Access/src/",
       "Company\\": "src/Company/src/",
-      "Libs\\": "Libs/",
+      "Patterns\\": "Libs/Patterns/",
       "Product\\": "src/Product/src/"
+    },
+    "autoload-dev": {
+      "psr-4": {
+        "PatternsTest\\": "Libs/Test/"
+      }
     }
   },
   "scripts": {
