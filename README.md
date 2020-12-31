@@ -96,7 +96,7 @@
 
 ---
 
-###Commands
+### Commands
 
 * Create a new module: 
    * `composer mezzio module:create <module-name>`  
